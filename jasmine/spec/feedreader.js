@@ -1,18 +1,5 @@
-/* feedreader.js
- *
- * This is the spec file that Jasmine will read and contains
- * all of the tests that will be run against your application.
- */
-
-/* We're placing all of our tests within the $() function,
- * since some of these tests may require DOM elements. We want
- * to ensure they don't run until the DOM is ready.
- */
 $(function() {
-    /* This is our first test suite - a test suite just contains
-    * a related set of tests. This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
-    */
+
     describe('RSS Feeds', function() {
         /*  make sure allFeeds is defined and not empty
          */
@@ -85,10 +72,20 @@ $(function() {
 
     });
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function(){
+        // resource count
+        var firstResource = null;
+        var secondResource = null;
+        // load feed before testing
+        beforeEach(function(done) {
+            loadFeed(0, done);
+            firstResource = document.querySelectorAll('.entry-link');
+            loadFeed(1, done);
+            secondResource = document.querySelectorAll('.entry-link');
+        });
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+        it('makes sure resources change', function() {
+            expect(firstResource).not.toBe(secondResource);
+        });
+    });
 }());
